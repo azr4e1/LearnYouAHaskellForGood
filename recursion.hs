@@ -52,9 +52,47 @@ elem' a (x:xs)
     | a == x    = True
     | otherwise = a `elem'` xs
 
-quicksort :: (Ord a) => [a] -> [a]
-quicksort [] = []
-quicksort (x:xs) = 
-    let smallerSorted = quicksort [a | a <- xs, a <= x]
-        biggerSorted = quicksort [a | a <- xs, a > x]
+quickSort :: (Ord a) => [a] -> [a]
+quickSort [] = []
+quickSort (x:xs) = 
+    let smallerSorted = quickSort [a | a <- xs, a <= x]
+        biggerSorted = quickSort [a | a <- xs, a > x]
     in smallerSorted ++ [x] ++ biggerSorted
+
+
+mergeSort :: (Ord a) => [a] -> [a]
+mergeSort [] = []
+mergeSort [x] = [x]
+mergeSort xs = 
+    let len = length xs `div` 2
+        x1 = mergeSort (take len xs)
+        x2 = mergeSort (drop len xs)
+    in joinOrdered x1 x2
+    where joinOrdered :: (Ord a) => [a] -> [a] -> [a]
+          joinOrdered [] [] = []
+          joinOrdered xs [] = xs
+          joinOrdered [] ys = ys
+          joinOrdered xAll@(x:xs) yAll@(y:ys)
+              | x <= y    = x:joinOrdered xs yAll
+              | otherwise = y:joinOrdered xAll ys
+
+
+insertionSort :: (Ord a) => [a] -> [a]
+insertionSort [] = []
+insertionSort [x] = [x]
+insertionSort xs =
+    let almostSorted = insertionSort (init xs)
+        x = last xs
+        smallerSorted = [w | w <- almostSorted, w <= x]
+        biggerSorted =  [w | w <- almostSorted, w > x]
+    in smallerSorted ++ [x] ++ biggerSorted
+
+-- quicksort [2, 3, 1]
+-- mergeSort [2, 3, 1]
+-- insertionSort [2, 3, 1]
+-- quicksort [10,2,5,3,1,6,7,4,2,3,4,8,9]
+-- mergeSort [10,2,5,3,1,6,7,4,2,3,4,8,9]
+-- insertionSort [10,2,5,3,1,6,7,4,2,3,4,8,9]
+-- quicksort [7112, 29877, 29074, 19116, 31526, 27824, 13590, 12759, 1203, 5988, 16305, 416, 27995, 14290, 4888, 20656, 22923, 2783, 23254, 9737, 2063, 2745, 31768, 9133, 10474, 4344, 7086, 21154, 12400, 8573]
+-- mergeSort [7112, 29877, 29074, 19116, 31526, 27824, 13590, 12759, 1203, 5988, 16305, 416, 27995, 14290, 4888, 20656, 22923, 2783, 23254, 9737, 2063, 2745, 31768, 9133, 10474, 4344, 7086, 21154, 12400, 8573]
+-- insertionSort [7112, 29877, 29074, 19116, 31526, 27824, 13590, 12759, 1203, 5988, 16305, 416, 27995, 14290, 4888, 20656, 22923, 2783, 23254, 9737, 2063, 2745, 31768, 9133, 10474, 4344, 7086, 21154, 12400, 8573]
