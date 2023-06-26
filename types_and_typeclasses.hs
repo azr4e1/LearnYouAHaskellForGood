@@ -36,7 +36,7 @@ circumference r = 2*pi*r
 -- The empty tuple () is also a type which can only have a single value: ()
 -- Type variables: if you test :t head, the type of this function is `[a] -> a`; all types are in capital case, so it's not a variable; it's actually a `type variable`, which means that `a` can be of any type. This allows to write very generic functions.
 -- Functions that have type variables are called `polymorphic functions` (can be of multiple types).
--- A typeclass can be represented as a math function that to each type defined assigns lawful operations on that type. It is a sort of interface that defines some behaviour
+-- A typeclass can be represented as a math function that to each type defined assigns lawful operations on that type. It is a sort of interface that defines some behaviour. If a type is part of a typeclass, that means that it supports and implements the behavior the typeclass describes.
 -- If we do :t (==), we see
 -- (==) :: Eq a => a -> a -> Bool
 -- Everything before => is called a class constraint; it means that the type variables must belong to the class contraint specified.
