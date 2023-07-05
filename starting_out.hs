@@ -132,30 +132,30 @@ length' xs = sum [1 | _ <- xs]
 --
 -- Remember: strings are also lists of characters
 removeNonUpperCase st = [ c | c <- st, c `elem` ['A'..'Z']]
-removeNonUpperCase "Hahaha! Ahahahaha!"
-removeNonUpperCase "IdontLIKEFROGS"
+v = removeNonUpperCase "Hahaha! Ahahahaha!"
+w  = removeNonUpperCase "IdontLIKEFROGS"
 
-let xxs = [[1,3,5,2,3,1,2,4,5],[1,2,3,4,5,6,7,8,9],[1,2,4,2,1,6,3,1,3,2,3,6]]
-[[x | x <- xs, even x] | xs <- xxs]
+xxs = [[1,3,5,2,3,1,2,4,5],[1,2,3,4,5,6,7,8,9],[1,2,4,2,1,6,3,1,3,2,3,6]]
+a = [[x | x <- xs, even x] | xs <- xxs]
 
 -- Tuples
 -- tuples are similar to lists: store several values into a single value; however, a list of numbers has type `list of numbers`. 
 -- The type of a tuple depends on how many components it has and the type of the components. Also, they don't have to be homogenous. E.g.:
-[[1, 2], [2, 3, 4], [3, 4]] -- representing points of a triange on a 2d plane: ok for haskell but it doesn't make sense
-[(1, 2), (2, 3), (3, 4)] -- make sense; since a 2-value tuple is its own type:
-[(1, 2), (2, 3, 4), (3, 4)] -- error because lists must be homogenous
+aa  =[[1, 2], [2, 3, 4], [3, 4]] -- representing points of a triange on a 2d plane: ok for haskell but it doesn't make sense
+b = [(1, 2), (2, 3), (3, 4)] -- make sense; since a 2-value tuple is its own type:
+-- c = [(1, 2), (2, 3, 4), (3, 4)] -- error because lists must be homogenous
 
 -- Valid:
-("Christopher", "Walken", 55)
+d = ("Christopher", "Walken", 55)
 
-fst (8, 11)
-snd (8,11)
+e = fst (8, 11)
+f = snd (8,11)
 
 -- produces lists of pairs
-zip [1, 2, 3, 4] [2, 3, 4, 5]
-zip [5, 4, 3, 4, 5, 6, 7, 4, 3, 56] ["Im", "a", "turtle"]
+g  =zip [1, 2, 3, 4] [2, 3, 4, 5]
+i = zip [5, 4, 3, 4, 5, 6, 7, 4, 3, 56] ["Im", "a", "turtle"]
 -- because haskell is lazy, you can zip infinite lists
-zip [1..] ["apple", "oranze", "cherry", "mango"]
+l = zip [1..] ["apple", "oranze", "cherry", "mango"]
 
 -- Problem: which right triangle that has integers for all sides and all sides equal to or smaller than 10 has a perimeter of 24?
 triangles = [(x, y, z) | x <- [1..10], y <- [1..10], z <- [1..10]]
