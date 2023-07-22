@@ -2,7 +2,10 @@
 -- The Haskell standard library is split into modules, each of them contains functions and types that are somehow related and serve some common purpose. There's a module for manipulating lists, a module for concurrent programming, a module for dealing with complex numbers, etc. All the functions, types and typeclasses that we've dealt with so far were part of the Prelude module, which is imported by default.
 --
 -- The syntax for importing modules in a Haskell script is import <module name>. This must be done before defining any functions.
+import Data.Char
 import Data.List
+import qualified Data.Set as Set
+import qualified Data.Map as Map
 
 -- numUniques :: (Eq a) => [a] -> Int
 -- numUniques = length . nub
@@ -103,3 +106,45 @@ search needle haystack =
 t' = find (\(val,y,m,d) -> val>1000) stock
 
 -- elemIndex is kind of like elem, only it doesn't return a boolean value. It maybe returns the index of the element we're looking for. If that element isn't in our list, it returns a Nothing.
+-- Continues...
+
+encode :: Int -> String -> String
+encode shift msg =
+    let ords = map ord msg
+        shifted = map (+ shift) ords
+    in map chr shifted
+
+findKey :: (Eq k) => k -> [(k, v)] -> v
+findKey key xs = snd . head . filter (\(k, v) -> key == k) $ xs
+
+findKey' :: (Eq k) => k -> [(k, v)] -> Maybe v
+findKey' key [] = Nothing
+findKey' key ((k,v):xs) = if key == k
+                             then Just v
+                             else findKey' key xs
+
+findKey'' :: (Eq k) => k -> [(k, v)] -> Maybe v
+findKey'' key = foldr (\(k, v) acc -> if key == k then Just v else acc) Nothing
+
+phoneBook = 
+    [("amelia","555-2938")  
+    ,("amelia","342-2492")  
+    ,("freya","452-2928")  
+    ,("isabella","493-2928")  
+    ,("isabella","943-2929")  
+    ,("isabella","827-9162")  
+    ,("neil","205-2928")  
+    ,("roald","939-8282")  
+    ,("tenzing","853-2492")  
+    ,("tenzing","555-2111")  
+    ]
+
+phoneBookToMap :: (Ord k) => [(k, String)] -> Map.Map k String
+phoneBookToMap xs = Map.fromListWith (\number1 number2 -> number1 ++ ", " ++ number2) xs
+
+z = Map.lookup "isabella" $ phoneBookToMap phoneBook
+
+phoneBookToMap' :: (Ord k) => [(k, a)] -> Map.Map k [a]
+phoneBookToMap' xs = Map.fromListWith (++) $ map (\(k,v) -> (k,[v])) xs
+
+z' = Map.lookup "isabella" $ phoneBookToMap' phoneBook
